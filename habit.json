@@ -1,0 +1,39 @@
+{
+  "id": "gradle_example",
+  "network": {
+    "subnet": "172.30.0.0/16",
+    "ipRange": "172.30.0.0/16",
+    "gateway": "172.30.0.1"
+  },
+  "servers": [
+    {
+      "name": "main",
+      "docker": {
+        "image": "httpd:2.4.38"
+      },
+      "domains": [
+        "front.domain.com"
+      ],
+      "logFiles": [
+        "/usr/local/apache2/front.domain.com_error.log"
+      ],
+      "deploy": {
+        "paths": [
+          {
+            "source": "httpdConfiguration",
+            "target": "/usr/local/apache2/conf"
+          }
+        ],
+        "reloadCommand": "apachectl -k graceful"
+      },
+      "ports": [80],
+      "sslPorts": [443]
+    }
+  ],
+  "mocks": [
+    {
+      "hostname": "back.domain.local",
+      "ports": [80]
+    }
+  ]
+}
